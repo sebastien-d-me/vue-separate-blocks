@@ -1,6 +1,6 @@
 {
     "name": "vue-separate-blocks",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "Automatically separates the script, template, and style blocks of your Vue.js files by a custom number of new line(s).",
     "keywords": [
         "separate blocks",

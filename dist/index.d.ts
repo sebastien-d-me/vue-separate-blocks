@@ -1,1 +1,1 @@
-export declare function separateBlocks(newLineNumbers: number): void;
+export declare function separateBlocks(newLineNumbers: number, folderPath?: string): Promise<void>;

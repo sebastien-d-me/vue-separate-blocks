@@ -2,18 +2,25 @@ import * as fs from "fs";
 import * as path from "path";
 
 
-export function separateBlocks(newLineNumbers: number) {
-    const folderPath = path.join(process.cwd(), "src");
+export async function separateBlocks(newLineNumbers: number, folderPath: string = "src") {
+    const fullPath: string = path.join(process.cwd(), folderPath);
 
-    fs.readdirSync(folderPath).filter(componentFile => componentFile.endsWith(".vue")).forEach(componentFile => {
-        const filePath = path.join(folderPath, componentFile);
-        let content = fs.readFileSync(filePath, "utf-8");
-        const newLine = "\n".repeat(newLineNumbers + 1)
+    try {
+        const files = await fs.promises.readdir(fullPath);
 
-        content = content.replace(/<\/script>\s*<template|<\/template>\s*<style/g, (match) => match.replace(/>\s*</g, `>${newLine}<`));
+        await Promise.all(files.map(async (file) => {
+            const filePath: string = path.join(fullPath, file);
+            const stats = await fs.promises.stat(filePath);
 
-        if (content !== fs.readFileSync(filePath, "utf-8")) {
-            fs.writeFileSync(filePath, content, "utf-8");
-        }
-    });
+            if (stats.isDirectory()) {
+                await separateBlocks(newLineNumbers, path.join(folderPath, file));
+            } else if (file.endsWith(".vue")) {
+                let content: string = await fs.promises.readFile(filePath, "utf-8");
+                content = content.replace(/<\/script>\s*<template|<\/template>\s*<style/g, (match) => match.replace(/>\s*</g, `>${"\n".repeat(newLineNumbers + 1)}<`));
+                await fs.promises.writeFile(filePath, content, "utf-8");
+            }
+        }));
+    } catch (error) {
+        console.error(`An error has occurred : ${error}`);
+    }
 }

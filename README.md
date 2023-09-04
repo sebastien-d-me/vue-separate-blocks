@@ -10,9 +10,9 @@ npm i vue-separate-blocks --save-dev
 
 
 ## ⚙️ Use
-1. Add this script into your "package.json" and customize the number of new line(s) you want (replace number with a integer) : 
+1. Add this script into your "package.json" and customize the number of new line(s) you want (replace number with a integer). And change the folder path : 
 ```javascript
-"separate-blocks": "node -e \"require('vue-separate-blocks').separateBlocks(number)\""
+"separate-blocks": "node -e \"require('vue-separate-blocks').separateBlocks(number, folder)\""
 ```
 
 2. Run the command :
@@ -22,7 +22,7 @@ npm run separate-blocks
 
 Example :
 ```javascript
-"separate-blocks": "node -e \"require('vue-separate-blocks').separateBlocks(2)\""
+"separate-blocks": "node -e \"require('vue-separate-blocks').separateBlocks(2, "src")\""
 ```
 
 Before :
