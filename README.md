@@ -22,7 +22,7 @@ npm run separate-blocks
 
 Example :
 ```javascript
-"separate-blocks": "node -e \"require('vue-separate-blocks').separateBlocks(2, "src")\""
+"separate-blocks": "node -e \"require('vue-separate-blocks').separateBlocks(2, 'src')\""
 ```
 
 Before :
